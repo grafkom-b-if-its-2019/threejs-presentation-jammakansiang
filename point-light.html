@@ -29,74 +29,88 @@
     // once everything is loaded, we run our Three.js stuff.
     function init() {
         var stats = initStats();
-        // create a scene, that will hold all our elements such as objects, cameras and lights.
+
+        //Buat Scene, yang akan menampilkan beberapa elemen seperti objek, kamera dan lampu
         var scene = new THREE.Scene();
-        // create a camera, which defines where we're looking at.
+
+        //Buat camera, untuk mendefinisikan dari mana kita melihat objek
         var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        // create a render and set the size
+        //Buat render dan size dari windownya
         var renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0));
         renderer.setSize(window.innerWidth, window.innerHeight);
         // renderer.shadowMapEnabled = true;
-        // create the ground plane
+
+        // Buat plane/tanah
         var planeGeometry = new THREE.PlaneGeometry(60, 20, 20, 20);
         var planeMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
         var plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.receiveShadow = true;
-        // rotate and position the plane
+        //atur posisi dan rotasi dari plane
         plane.rotation.x = -0.5 * Math.PI;
         plane.position.x = 15;
         plane.position.y = 0;
         plane.position.z = 0;
-        // add the plane to the scene
+        //tambahkan ke scene
         scene.add(plane);
-        // create a cube
+
+        // Buat kubus
         var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
         var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xff7777});
         var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        //buat castShadow default nya true
         cube.castShadow = true;
-        // position the cube
+        // tentukan posisi kubus
         cube.position.x = -4;
         cube.position.y = 3;
         cube.position.z = 0;
-        // add the cube to the scene
+        // tambahkan kubus ke Scnene
         scene.add(cube);
+
+        //buat bola/sphere
         var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
         var sphereMaterial = new THREE.MeshLambertMaterial({color: 0x7777ff});
         var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        // position the sphere
+        // tentukan posisi sphere
         sphere.position.x = 20;
         sphere.position.y = 0;
         sphere.position.z = 2;
+        //buat castShadow default nya true
         sphere.castShadow = true;
-        // add the sphere to the scene
+        //tambahkan sphere ke scene
         scene.add(sphere);
-        // position and point the camera to the center of the scene
+
+        //posisi dari kamera
         camera.position.x = -25;
         camera.position.y = 30;
         camera.position.z = 25;
         camera.lookAt(new THREE.Vector3(10, 0, 0));
-        // add subtle ambient lighting
+
+        // tambahkan ambient lighting
         var ambiColor = "#0c0c0c";
         var ambientLight = new THREE.AmbientLight(ambiColor);
         scene.add(ambientLight);
-        // add spotlight for the shadows
-        // add spotlight for the shadows
+
+        // tambahkan spotLight supaya lebih terang
         var spotLight = new THREE.SpotLight(0xffffff);
         spotLight.position.set(-40, 60, -10);
         spotLight.castShadow = true;
-        // scene.add( spotLight );
+        scene.add( spotLight );
+
+        //tambahkan pointLight
         var pointColor = "#ccffcc";
         var pointLight = new THREE.PointLight(pointColor);
         pointLight.distance = 100;
         scene.add(pointLight);
-        // add a small sphere simulating the pointlight
+
+        //Menambahkan efek pada sphere
         var sphereLight = new THREE.SphereGeometry(0.2);
         var sphereLightMaterial = new THREE.MeshBasicMaterial({color: 0xac6c25});
         var sphereLightMesh = new THREE.Mesh(sphereLight, sphereLightMaterial);
         sphereLightMesh.castShadow = true;
         sphereLightMesh.position = new THREE.Vector3(3, 0, 3);
         scene.add(sphereLightMesh);
+        
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(renderer.domElement);
         // call the render function
